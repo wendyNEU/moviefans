@@ -1,0 +1,46 @@
+<div class="container" ng-controller="MovieController">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <span>Movie Review</span>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="filters">
+                    <select ng-model="model.selectedfilter" ng-change="model.changefilter(model.selectedfilter)"
+                            data-ng-options="filter as filter.label for filter in model.Filters">
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form style="text-align: right">
+                    <input ng-model="model.keyword" placeholder="search movie">
+                    <button type="button" class="btn" ng-click="model.changefilter({value:'search'})">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="movie-list" ng-repeat="movie in model.movielist">
+            <div class="clearfix" ng-if="$index<model.movielist.length&&$index % 4 == 0"></div>
+            <div class="col-md-3">
+                <div class="movie">
+                    <a href="#/movie_detail/{{movie.id}}">
+                        <figure class="movie-poster"><img ng-src="{{model.veriPosterImg(movie.posterurl)}}">
+                        </figure>
+                    </a>
+                    <div class="movie-title"><a href="#/movie_detail/{{movie.id}}">{{movie.title}}</a></div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- .movie-list -->
+
+    <div class="pagination">
+        <a class="page-number prev" ng-show="model.page>1" ng-click="model.changePage(model.page-1)"><i
+                class="fa fa-angle-left"></i></a>
+        <span class="page-number current">{{model.page}}</span>
+        <a class="page-number next" ng-click="model.changePage(model.page+1)"><i class="fa fa-angle-right"></i></a>
+    </div>
+
+</div>
+

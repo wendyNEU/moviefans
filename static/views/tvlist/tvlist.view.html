@@ -1,0 +1,48 @@
+<div class="container" ng-controller="TvController">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <span>Tv Review</span>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="filters">
+                    <select ng-model="model.selectedfilter" ng-change="model.changefilter(model.selectedfilter)"
+                            data-ng-options="filter as filter.label for filter in model.Filters">
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form style="text-align: right">
+                    <input ng-model="model.keyword" placeholder="search TV">
+                    <button type="button" class="btn" ng-click="model.changefilter({value:'search'})">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="movie-list" ng-repeat="tv in model.tvlist">
+            <div class="clearfix" ng-if="$index<model.tvlist.length&&$index % 4 == 0"></div>
+            <div class="col-md-3">
+                <div class="movie">
+                    <a href="#/tv_detail/{{tv.id}}">
+                        <figure class="movie-poster"><img ng-src="{{model.veriPosterImg(tv.posterurl)}}">
+                        </figure>
+                    </a>
+                    <div class="movie-title"><a href="#/tv_detail/{{tv.id}}">{{tv.name}}</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="pagination">
+                <a class="page-number prev" ng-show="model.page>1" ng-click="model.changePage(model.page-1)"><i
+                        class="fa fa-angle-left"></i></a>
+                <span class="page-number current">{{model.page}}</span>
+                <a class="page-number next" ng-click="model.changePage(model.page+1)"><i class="fa fa-angle-right"></i></a>
+            </div>
+        </div>
+    </div> <!-- .movie-list -->
+</div><!-- .container -->
+
+
+

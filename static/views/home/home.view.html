@@ -1,0 +1,39 @@
+<div class="container" ng-controller="HomeController as model">
+    <div class="page">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#/movie_list">
+                    <h2 class="section-title">Popular Movie</h2>
+                </a>
+                <ul class="movie-schedule" ng-repeat="movie in model.movielist">
+                    <li>
+                        <span class="glyphicon glyphicon-film"></span>
+                        <h2 class="entry-title"><a href="#/movie_detail/{{movie.id}}">{{movie.title}}</a></h2>
+                    </li>
+                </ul> <!-- .movie-schedule -->
+            </div>
+            <div class="col-md-4">
+                <a href="#/tv_list">
+                    <h2 class="section-title">Popular TV</h2></a>
+                <ul class="movie-schedule" ng-repeat="tv in model.tvlist">
+                    <li>
+                        <span class="glyphicon glyphicon-facetime-video"></span>
+                        <h2 class="entry-title"><a href="#/tv_detail/{{tv.id}}">{{tv.name}}</a></h2>
+                    </li>
+                </ul> <!-- .movie-schedule -->
+            </div>
+            <div class="col-md-4">
+                <a href="#/actor_list">
+                    <h2 class="section-title">Popular Actor</h2>
+                </a>
+                <ul class="movie-schedule" ng-repeat="actor in model.actorlist">
+                    <li>
+                        <span class="glyphicon glyphicon-user"></span>
+                        <h2 class="entry-title"><a href="#/actor_detail/{{actor.id}}">{{actor.name}}</a></h2>
+                    </li>
+
+                </ul> <!-- .movie-schedule -->
+            </div>
+        </div>
+    </div>
+</div> <!-- .container -->

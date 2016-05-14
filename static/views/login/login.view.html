@@ -1,0 +1,26 @@
+<div class="container" ng-controller="LoginController">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <span>Log In</span>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Log In</h2>
+                    <div class="contact-form">
+                        <input ng-model="model.user.username" type="text" class="name form-control" placeholder="Username *" id="login_username"
+                               required data-validation-required-message="Please enter your username.">
+                        <input ng-model="model.user.password" type="password" class="password form-control" placeholder="Password *" id="login_pwd"
+                               required data-validation-required-message="Please enter your password.">
+                        <button ng-click="model.login()" type="submit" class="btn btn-info">Log In</button>
+                    </div>
+                </div>
+                <div class="col-md-7 col-md-offset-1">
+                    <div class="map"><img src="./images/login-background.jpg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- .container -->

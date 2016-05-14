@@ -1,0 +1,177 @@
+<div class="container" ng-controller="TvDetailController as model">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <a href="#/tv_list">Tv Review</a>
+            <span>{{model.tv.name}}</span>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <figure class="movie-poster"><img ng-src="{{model.veriPosterImg(model.tv.posterurl)}}"></figure>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="movie-title">{{model.tv.name}}</h2>
+                    <div class="movie-summary">
+                        <p>{{model.tv.overview}}</p>
+                    </div>
+                    <ul class="movie-meta">
+                        <li>
+                            <button class="btn btn-circle-sm btn-info" ng-show="!model.likeitem&&model.islogin()"
+                                    ng-click="model.like()"><span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span class="label-icon">Like</span>
+                            </button>
+                            <button class="btn btn-circle-sm btn-info" ng-show="model.likeitem&&model.islogin()"
+                                    ng-click="model.unlike()"><span class="glyphicon glyphicon-thumbs-down"></span>
+                                <span class="label-icon">Unlike</span>
+                            </button>
+                            <button type="button" class="btn btn-info btn-md" data-toggle="modal"
+                                    data-target="#myModal">Trailer
+                            </button>
+                        </li>
+                        <li><strong>Rating:</strong>
+                            <div class="star-rating"><span
+                                    style="width:{{model.roundRate(model.tv.vote_average)}}"></span>
+                            </div>
+                            <label>Rated {{model.tv.vote_average}} out of 10</label>
+                        </li>
+                        <li><strong>First Air Date: </strong> {{model.tv.first_air_date}}</li>
+                        <li><strong>Last Air Date: </strong> {{model.tv.last_air_date}}</li>
+                        <li><strong>Genres: </strong>{{model.arrayToString(model.tv.genres)}}</li>
+                    </ul>
+
+                    <ul class="starring">
+                        <li><strong>Number Of Episodes: </strong>{{model.tv.number_of_episodes}}</li>
+                        <li><strong>Company: </strong>{{model.arrayToString(model.tv.production_companies)}}</li>
+                        <li ng-show="model.tv.homepage"><a href="{{model.tv.homepage}}"><strong>TV Home
+                            Page</strong></a></li>
+                    </ul>
+                </div>
+            </div> <!-- .row -->
+            <div class="entry-content">
+                <div class="row">
+                    <h2><strong>Create By:</strong></h2>
+                    <div ng-repeat="person in model.tv.created_by">
+                        <div class="col-sm-2">
+                            <a href="#/actor_detail/{{person.id}}">
+                                <img ng-src="{{model.genProfilePath(person.profile_path)}}" class="img-responsive" alt="">
+                            </a>
+                            <h3 align="center">{{person.name}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h2><strong>Seasons:</strong></h2>
+                    <div ng-repeat="season in model.tv.seasons">
+                        <div class="col-sm-2">
+                            <a href="#/tv_season/{{model.tv.id}}/{{model.tv.name}}/season/{{season.season_number}}">
+                                <img align="center" style="height:200px;" ng-src="{{model.genPosterPath(season.poster_path)}}" class="img-responsive" alt="">
+                            </a>
+                            <br>
+                            <h3 align="center">Seasons  {{season.season_number}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="entry-content">
+                <div class="row" ng-show="model.islogin()">
+                    <div class="col-lg-12">
+                        <div class="well">
+                            <h4>Leave Comment:</h4>
+                            <form role="form">
+                                <div class="form-group">
+                                <textarea class="form-control coment-textarea" rows="3"
+                                          ng-model="model.commenttext"></textarea>
+                                </div>
+                                <button ng-click="model.addComment()" type="submit" class="btn btn-info">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-repeat="comment in model.commentSet.comments">
+                    <div class="col-lg-2">
+                        <div class="thumbnail">
+                            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <strong>{{comment.username}}</strong> <span
+                                    class="text-muted">Post on {{comment.date}}</span> <a
+                                    class="addComToCom" ng-click="model.activeCommentWell($index)">Add Comment</a> <a
+                                    ng-show="model.authPower(comment.user_id)" ng-click="model.deleteComment(comment._id)">Delete
+                                Comment</a>
+                            </div>
+                            <div class="panel-body">
+                                {{comment.text}}
+                            </div>
+                        </div>
+                        <div class="well" ng-show="model.isCommentWellActive($index)">
+                            <h4>Add Comment:</h4>
+                            <form role="form">
+                                <div class="form-group">
+                                <textarea ng-model="model.subcommenttext" class="form-control coment-textarea"
+                                          rows="3"></textarea>
+                                </div>
+                                <button ng-click="model.addSubComment($index)" type="submit" class="btn btn-info">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                        <div class="row" ng-repeat="subcomment in comment.subcomments">
+                            <div class="col-lg-2">
+                                <div class="subcommentimg thumbnail">
+                                    <img class="img-responsive user-photo"
+                                         src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div>
+                            </div>
+                            <div class="col-lg-10">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <strong>{{subcomment.username}}</strong> <span class="text-muted">{{subcomment.date}}</span>
+                                        <a ng-show="model.authPower(subcomment.user_id)"
+                                           ng-click="model.deleteSubComment(comment._id,subcomment._id)">Delete Comment</a>
+                                    </div>
+                                    <div class="panel-body">
+                                        {{subcomment.text}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="trailer" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators" ng-repeat="video in model.tv.video">
+                            <li data-target="#trailer" data-slide-to="{{$index}}" class="active"></li>
+                        </ol>
+                        <div class="carousel-inner" ng-repeat="video in model.tv.video">
+                            <div class="item active">
+                                <div class="thumbnail">
+                                    <div class="video-container">
+                                        <iframe width="870" height="550" ng-src="{{video.youtubeurl}}"
+                                                frameborder="0" allowfullscreen=""></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<header class="site-header" ng-controller="HeaderController as model">
+    <div class="container">
+        <a href="index.html" id="branding">
+            <img src="/static/images/logo.png" alt="" class="logo">
+            <div class="logo-copy">
+                <h1 class="site-title">Movie Fans</h1>
+                <small class="site-description">Entertainment Club</small>
+            </div>
+        </a> <!-- #branding -->
+
+        <div class="main-navigation">
+            <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+            <ul class="menu">
+                <li class="menu-item" ng-class="{'active': model.isMovieLink()}">
+                    <a class="page-scroll" href="#/movie_list">Movie</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.isTvLink()}">
+                    <a class="page-scroll" href="#/tv_list">TV</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.isActorLink()}">
+                    <a class="page-scroll" href="#/actor_list">Actor</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.$location.url() == '/register'}" ng-hide="model.islogin()">
+                    <a class="page-scroll" href="#/register">Register</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.$location.url() == '/login'}" ng-hide="model.islogin()">
+                    <a class="page-scroll" href="#/login">Log In</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.$location.url() == '/profile'}" ng-show="model.islogin()">
+                    <a class="page-scroll" href="#/profile">{{curUser.username}}</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.$location.url() == '/admin'}" ng-show="model.isAdmin()">
+                    <a class="page-scroll" href="#/admin">Admin</a>
+                </li>
+                <li class="menu-item" ng-class="{'active': model.$location.url() == '/logout'}" ng-show="model.islogin()">
+                    <a class="page-scroll" ng-click="model.logout()" href="#/logout">Log Out</a>
+                </li>
+            </ul> <!-- .menu -->
+
+        </div> <!-- .main-navigation -->
+        <div class="mobile-navigation"></div>
+    </div>
+</header>

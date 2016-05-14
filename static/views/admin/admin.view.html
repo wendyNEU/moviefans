@@ -1,0 +1,77 @@
+<div class="container" ng-controller="AdminController as model">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <span>Admin</span>
+        </div>
+
+        <div class="content">
+            <h1></h1>
+            <div class="table-responsive">
+                <table class="grid table table-striped table-bordered table-sortable">
+                    <thead>
+                    <tr>
+                        <th>
+                            User Name
+                        </th>
+                        <th>
+                            Password
+                        </th>
+                        <th>
+                            Roles
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Photo
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="ui-sortable">
+                    <tr>
+                        <td><input ng-model="model.newUser.username" type="text" value="User Name"
+                                   class="form-control">
+                        </td>
+                        <td><input ng-model="model.newUser.password" type="text" value="Password"
+                                   class="form-control">
+                        </td>
+                        <td><input ng-model="model.newUser.rules" type="text" value="Rule"
+                                   class="form-control">
+                        </td>
+                        <td><input ng-model="model.newUser.email" type="text" value="Email"
+                                   class="form-control">
+                        </td>
+                        <td><input ng-model="model.newUser.photo" type="file" value="Photo"
+                                   class="form-control">
+                        </td>
+                        <td>
+                            <button ng-click="model.createUser()"
+                                    class="btn-xs btn-primary glyphicon glyphicon-plus"></button>
+
+                            <button ng-click="model.updateUser()"
+                                    class="btn-xs btn-primary glyphicon glyphicon-ok"></button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="user in model.users">
+                        <td>{{user.username}}</td>
+                        <td><p hidden>{{user.password}}</td>
+                        <td>{{user.rules}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.photo}}</td>
+                        <td>
+                            <button ng-click="model.deleteUser($index)"
+                                    class="btn-xs btn-primary glyphicon glyphicon-remove"></button>
+                            <button ng-click="model.selectUser($index)"
+                                    class="btn-xs btn-primary glyphicon glyphicon-pencil"></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> <!-- .container -->

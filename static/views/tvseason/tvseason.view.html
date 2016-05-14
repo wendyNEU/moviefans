@@ -1,0 +1,133 @@
+<div class="container" ng-controller="TvSeasonController">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <a href="#/tv_list">Tv Review</a>
+            <a href="#/tv_detail/{{model.$routeParams.id}}">{{model.$routeParams.tvname}}</a>
+            <span>{{model.tv.name}}</span>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <figure class="movie-poster"><img ng-src="{{model.genPosterPath(model.tv.poster_path)}}"></figure>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="movie-title">{{model.tv.name}}</h2>
+                    <div class="movie-summary">
+                        <p>{{model.tv.overview}}</p>
+                    </div>
+                    <ul class="movie-meta">
+                        <li>
+                            <button class="btn btn-circle-sm btn-info" ng-show="!model.likeitem&&model.islogin()"
+                                    ng-click="model.like()"><span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span class="label-icon">Like</span>
+                            </button>
+                            <button class="btn btn-circle-sm btn-info" ng-show="model.likeitem&&model.islogin()"
+                                    ng-click="model.unlike()"><span class="glyphicon glyphicon-thumbs-down"></span>
+                                <span class="label-icon">Unlike</span>
+                            </button>
+                        </li>
+                        <li><strong>Air Date: </strong> {{model.tv.air_date}}</li>
+                    </ul>
+                </div>
+            </div> <!-- .row -->
+            <div class="entry-content">
+                <h2><strong>Episodes: </strong></h2>
+                <div ng-repeat="episode in model.tv.episodes">
+                    <div class="row"
+                         style="background-color:lightgoldenrodyellow;padding: 10px; margin: 10px; border-radius:3px;box-shadow: 5px 5px;">
+                        <div class="col-lg-4">
+                            <img style="height:200px;" ng-src="{{model.genProfilePath(episode.still_path)}}"
+                                 class="img-responsive" alt="">
+                        </div>
+                        <div class="col-lg-8">
+                            <h3 align="center">Episode {{$index+1}} : {{episode.name}}</h3>
+                            <div>
+                                <strong>Rating:</strong>
+                                <div class="star-rating"><span
+                                        style="width:{{model.roundRate(episode.vote_average)}}"></span>
+                                </div>
+                                <label>Rated {{episode.vote_average}} out of 10, {{episode.vote_count}} people
+                                    voted</label>
+                            </div>
+                            <p>{{episode.overview}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="entry-content">
+                <div class="row" ng-show="model.islogin()">
+                    <div class="col-lg-12">
+                        <div class="well">
+                            <h4>Leave Comment:</h4>
+                            <form role="form">
+                                <div class="form-group">
+                                <textarea class="form-control coment-textarea" rows="3"
+                                          ng-model="model.commenttext"></textarea>
+                                </div>
+                                <button ng-click="model.addComment()" type="submit" class="btn btn-info">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-repeat="comment in model.commentSet.comments">
+                    <div class="col-lg-2">
+                        <div class="thumbnail">
+                            <img class="img-responsive user-photo"
+                                 src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <strong>{{comment.username}}</strong> <span
+                                    class="text-muted">Post on {{comment.date}}</span> <a
+                                    class="addComToCom" ng-click="model.activeCommentWell($index)">Add Comment</a> <a
+                                    ng-show="model.authPower(comment.user_id)"
+                                    ng-click="model.deleteComment(comment._id)">Delete
+                                Comment</a>
+                            </div>
+                            <div class="panel-body">
+                                {{comment.text}}
+                            </div>
+                        </div>
+                        <div class="well" ng-show="model.isCommentWellActive($index)">
+                            <h4>Add Comment:</h4>
+                            <form role="form">
+                                <div class="form-group">
+                                <textarea ng-model="model.subcommenttext" class="form-control coment-textarea"
+                                          rows="3"></textarea>
+                                </div>
+                                <button ng-click="model.addSubComment($index)" type="submit" class="btn btn-info">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                        <div class="row" ng-repeat="subcomment in comment.subcomments">
+                            <div class="col-lg-2">
+                                <div class="subcommentimg thumbnail">
+                                    <img class="img-responsive user-photo"
+                                         src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div>
+                            </div>
+                            <div class="col-lg-10">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <strong>{{subcomment.username}}</strong> <span class="text-muted">{{subcomment.date}}</span>
+                                        <a ng-show="model.authPower(subcomment.user_id)"
+                                           ng-click="model.deleteSubComment(comment._id,subcomment._id)">Delete
+                                            Comment</a>
+                                    </div>
+                                    <div class="panel-body">
+                                        {{subcomment.text}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

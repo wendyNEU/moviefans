@@ -1,0 +1,63 @@
+<!-- Register Section -->
+<div class="container" ng-controller="RegisterController">
+    <div class="page">
+        <div class="breadcrumbs">
+            <a href="#/home">Home</a>
+            <span>Register</span>
+        </div>
+
+        <div class="content">
+            <section class="user" id="register" ng-controller="RegisterController">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading">Register</h2>
+                        <h3 class="section-subheading text-muted">* must be filled in</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form name="sentMessage" id="registerForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input ng-model="model.user.username" type="text" class="form-control"
+                                               placeholder="Username *" id="username" required
+                                               data-validation-required-message="Please enter your username.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input ng-model="model.user.password" type="password" class="form-control"
+                                               placeholder="Password *" id="pwd" required
+                                               data-validation-required-message="Please enter your password.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input ng-model="model.user.email" type="email" class="form-control"
+                                               placeholder="Email *" id="email" required
+                                               data-validation-required-message="Please enter your email address.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input ng-model="model.user.veripassword" type="password" class="form-control"
+                                               placeholder="Comfirm Password *"
+                                               id="veripwd" required
+                                               data-validation-required-message="Please reenter your password.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                    <div id="success"></div>
+                                    <button ng-click="model.register()" type="submit" class="btn btn-xl">Register
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div> <!-- .container -->
